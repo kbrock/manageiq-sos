@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require "manageiq/sos"
+require "manageiq/sos/cli"
+
+ENV["RAILS_ROOT"] = [
+  ENV["RAILS_ROOT"], "#{ENV["HOME"]}/src/manageiq", "/var/www/miq/vmdb"
+].detect { |p| p && File.exists?("#{p}/config/environment.rb") }
+
+# require File.expand_path('config/environment', ENV["RAILS_ROOT"] || Dir.pwd)
+
+# monkey patching MiqReport and other Miq classes
+# require_relative "../lib/report_sanity_checker/monkey_patch"
+
+ManageIQ::SOS::CLI.run(ARGV)

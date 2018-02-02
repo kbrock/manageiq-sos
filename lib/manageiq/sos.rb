@@ -1,7 +1,8 @@
 require "manageiq/sos/version"
+require "manageiq/sos/report"
+require "manageiq/sos/cli_command"
 
-module Manageiq
-  module Sos
-    # Your code goes here...
+module ManageIQ
+  module SOS
   end
 end
