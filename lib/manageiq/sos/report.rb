@@ -80,7 +80,7 @@ module ManageIQ
         cmd    :table,  "ifconfig"
         cmd    :table,  "netstat",       "netstat --statistics --raw"
         cmd    :table,  "server_status", "cd #{ENV["RAILS_ROOT"]} ; rake evm:status_full"
-        #cmd   :table,  "server_status", "rake evm:status", # version < "5.8"
+        #cmd   :table,  "server_status", "cd #{ENV["RAILS_ROOT"]} ; rake evm:status", # version < "5.8"
         # "db_ping"
 
         subcmd "date", "timedate", "Local time"

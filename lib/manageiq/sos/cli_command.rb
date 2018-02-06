@@ -13,7 +13,7 @@ module ManageIQ
         @raw ||= exec_chomp_split(@cli)
       end
 
-      def value(field = nil)
+      def value(*_)
         raw
       end
    
@@ -28,8 +28,11 @@ module ManageIQ
       end
 
       def self.create(format, *args)
-        if format == :nv
+        case format
+        when :nv
           NvCLICommand.new(*args)
+        when :table
+          TableCLICommand.new(*args)
         else
           CLICommand.new(*args)
         end
