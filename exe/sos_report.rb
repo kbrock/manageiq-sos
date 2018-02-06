@@ -156,10 +156,11 @@ report.instance_eval do
   #cmd   :table,  "server_status", "cd #{ENV["RAILS_ROOT"]} ; rake evm:status", # version < "5.8"
   # "db_ping"
   cmd    :yaml,   "config", "cd #{ENV["RAILS_ROOT"]} ; rails r 'puts YAML.dump(MiqServer.my_server.get_config.config)'"
+  cmd    :nv,     "db_ping",       "cd #{ENV["RAILS_ROOT"]} ; ./tools/db_ping.rb"
   # subcmd "date", "timedate", "Local time"      # date
   # subcmd "time_zone", "timedate", "Time zone"
   # subcmd "num_cpus", "lscpu", "CPU(s)"
-
+  subcmd "avg_ping", "db_ping", "Average"
   publish "version", "uptime"
   # "db_ping"
 # # Server config:
