@@ -1,35 +1,55 @@
 module ManageIQ
   module SOS
     class Report
+      RAW_COMMANDS=[
+        ## application
+        :version,
+        :timedate,
+        ## processes
+        :lscpu,
+        :top,
+        :ps,
+        :uptime,
+        ## memory
+        :smem,
+        :vmstat,
+        ## disk
+        :df,
+        :vmstat_disk,
+        ## network
+        :ifconfig,
+        :netstat,
+        ## greps
+      ]
+      CURRENT_COMMANDS=[
+        ## application
+        :version,
+        :date, :time_zone, #:timedate,
+        ## processes
+        :num_cpus, #:lscpu,
+        #:top,
+        #:ps,
+        #:uptime,
+        ## memory
+        #:smem,
+        #:vmstat,
+        ## disk
+        #:df,
+        #:vmstat_disk,
+        ## network
+        #:ifconfig,
+        #:netstat,
+        ## greps
+        ]
       def initialize(options)
         @commands = {}
         @subcmds  = {}
+        @raw = options[:raw]
       end
 
       # raw report for now
       def run
-        [
-          ## application
-            :version,
-            #:timedate,
-              :date,
-              :time_zone,
-          ## processes
-            #:lscpu,
-              :num_cpus,
-            #:top,
-            #:ps,
-            #:uptime,
-          ## memory
-            #:smem,
-            #:vmstat,
-          ## disk
-           #:df,
-           #:vmstat_disk,
-          ## network
-           #:ifconfig,
-           #:netstat,
-        ].each do |method|
+        (@raw ? RAW_COMMANDS : CURRENT_COMMANDS).each do |method|
           ret = send(method)
           ret = ret.join("\n") if ret.kind_of?(Array)
 
@@ -57,10 +77,8 @@ module ManageIQ
       end
 
       def method_missing(name, *args)
-        if cmd = @commands[name.to_s]
+        if cmd = (@commands[name.to_s] || @subcmds[name.to_s])
           cmd.value(*args)
-        elsif subcmd = @subcmds[name.to_s]
-          subcmd.value(*args)
         else
           super
         end
