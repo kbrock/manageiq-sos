@@ -12,7 +12,7 @@ module ManageIQ
           opt.separator ""
           opt.separator "Options"
           opt.on("-h", "--help",         "Show this help")           { puts opt ; exit }
-          # opt.on("--max MAX",            "Max pids per worker type") { |v| options[:max] = v.to_i }
+          opt.on("-r", "--raw",          "Show the raw report")      { options[:raw] = true }
           opt.parse!(argv)
         end
         options
